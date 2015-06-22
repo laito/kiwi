@@ -1,0 +1,1 @@
+KIWI - A simple and distributed key-value store written in Ruby
