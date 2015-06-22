@@ -5,7 +5,12 @@ require 'socket'
 # This test case covers get, set and delete methods
 class TestClient < Test::Unit::TestCase
   def setup
-    @client = Kiwi::Client::TCPClient.new('127.0.0.1', '1739')
+    @thread = Thread.new { system('cd bin && ruby kiwi config.yml') }
+    @client = Kiwi::Client::TCPClient.new('127.0.0.1', '1771')
+  end
+
+  def teardown
+    @client.shutdown_server
   end
 
   def test_key_not_found

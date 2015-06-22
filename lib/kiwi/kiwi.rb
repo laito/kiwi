@@ -11,6 +11,8 @@ module Kiwi
       load_config args
       setup_ring
       start_server
+      trap(:INT) { EM.stop }
+      trap(:TERM) { EM.stop }
     end
 
     def load_config(args)

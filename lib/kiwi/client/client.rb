@@ -21,6 +21,11 @@ module Kiwi
         @sock.puts("del #{key}")
         @sock.recv(256)
       end
+
+      def shutdown_server
+        @sock.puts('shutdown')
+        @sock.recv(256)
+      end
     end
   end
 end
