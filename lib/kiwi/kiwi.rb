@@ -5,7 +5,7 @@ require 'kiwi/membership/membership'
 
 module Kiwi
   # The main server which starts up the eventmachine listeners
-  # TODO Keep an event log
+  # TODO: Keep an event log
   class KiwiServer
     def start(args)
       load_config args

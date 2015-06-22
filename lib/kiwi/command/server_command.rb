@@ -1,7 +1,7 @@
 module Kiwi
   module Command
     # Server related command handlers
-    # TODO Add more commands (server info)
+    # TODO: Add more commands (server info)
     module ServerCommand
       def command_quit(_args)
         close_connection

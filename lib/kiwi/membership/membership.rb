@@ -4,9 +4,9 @@
     module Membership
       # A very simple implementation of consistent hashing using Ruby Hashes
       # It also serves as the storage for membership table
-      # TODO Implement something better than all-to-all heartbeating protocol would be nice
-      # TODO Handle node failures
-      # TODO Use a better data structure for the hash ring
+      # TODO: Implement something better than all-to-all heartbeating protocol
+      # TODO: Handle node failures
+      # TODO: Use a better data structure for the hash ring
       class Ring
         def initialize(db, replicas = 3)
           @ring = {}

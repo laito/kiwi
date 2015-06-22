@@ -1,7 +1,7 @@
 module Kiwi
   module Database
     # A simple database implementation which using a hash
-    # TODO Background saving of the in-memory data
+    # TODO: Background saving of the in-memory data
     class SimpleDatabase
       def initialize
         @db = {}
