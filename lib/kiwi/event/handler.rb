@@ -1,4 +1,5 @@
 require 'eventmachine'
+require 'kiwi/config'
 
 module Kiwi
   module Event
@@ -6,10 +7,9 @@ module Kiwi
     # It sends and receives lines, and passes it on to the command receiver
     class Handler < EventMachine::Connection
       include EM::Protocols::LineText2
-      def initialize(database, ring)
-        @port, @ip = Socket.unpack_sockaddr_in(get_sockname)
+      def initialize(database)
+        _, Config.ip = Socket.unpack_sockaddr_in(get_sockname)
         @db = database
-        @ring = ring
         @connected = true
       end
 

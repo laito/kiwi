@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.executables   = ['bin/kiwi']
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'rake'
   spec.add_dependency 'eventmachine', '~> 1.0.7'
   spec.add_dependency 'em-synchrony', '~> 1.0.4'
 end

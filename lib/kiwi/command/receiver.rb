@@ -12,8 +12,8 @@ module Kiwi
       include ServerCommand
 
       # list of commands which are allowed
-      def initialize(database, ring)
-        super(database, ring)
+      def initialize(database)
+        super(database)
         @valid_methods = DatabaseCommand.public_instance_methods
         @valid_methods << ServerCommand.public_instance_methods
         @valid_methods = @valid_methods.flatten
@@ -24,23 +24,10 @@ module Kiwi
         method = "command_#{data[0]}".intern
         return 'Error: Command not found.' unless @valid_methods.include? method
         send(method, data)
-      rescue RemoteError => e
-        dispatch_to_remote(data, e.message)
       rescue ArgumentError => e
         e.message
       rescue KeyError
         'Error: Key not found'
-      end
-
-      def dispatch_to_remote(data, server)
-        # Key is not stored locally
-        Kiwi::Messaging::Messenger.send_message(
-          data,
-          server,
-          proc do |line|
-            send_line(line)
-          end
-        )
       end
     end # class Receiver < Event::Handler
   end # module Command

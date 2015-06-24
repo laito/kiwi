@@ -1,7 +1,4 @@
-require 'kiwi/command/receiver'
-require 'kiwi/config'
-require 'kiwi/database/simple_db'
-require 'kiwi/membership/membership'
+require 'kiwi'
 
 module Kiwi
   # The main server which starts up the eventmachine listeners
@@ -9,32 +6,31 @@ module Kiwi
   class KiwiServer
     def start(args)
       load_config args
-      setup_ring
+      add_members
       start_server
       trap(:INT) { EM.stop }
       trap(:TERM) { EM.stop }
     end
 
     def load_config(args)
-      @config = Kiwi::Config::KiwiConfig.new(args)
+      Config.init(args)
     end
 
-    def setup_ring
-      @db = Kiwi::Database::SimpleDatabase.new
-      @ring = Kiwi::Membership::Ring.new(@db)
-      @config.nodes.each do |node|
-        @ring.add(node)
+    def add_members
+      @db = Database::SimpleDatabase.new
+      Membership.init(@db)
+      Config.nodes.each do |node|
+        Membership.add(node)
       end
     end
 
     def start_server
-      receiver = Kiwi::Command::Receiver
       EM.epoll
       EM.run do
         EM.add_periodic_timer(5) do
-          @ring.heartbeat @config.heartbeat_timeout, @config.port
+          Membership.heartbeat
         end
-        EM.start_server('0.0.0.0', @config.port, receiver, @db, @ring)
+        EM.start_server('0.0.0.0', Config.port, Command::Receiver, @db)
       end
     end
   end # class KiwiServer

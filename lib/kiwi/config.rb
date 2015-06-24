@@ -1,18 +1,21 @@
 require 'yaml'
 
 module Kiwi
+  # Load configuration from a yaml file
   module Config
-    # Load configuration from a yaml file
-    class KiwiConfig
-      attr_reader :port, :nodes, :heartbeat_timeout
+    extend self
 
-      def initialize(args)
-        config_file = args[0]
-        config = YAML.load_file(File.join(__dir__, '../../' + config_file))
-        @port = config['port']
-        @nodes = config['nodes']
-        @heartbeat_timeout = config['heartbeat_timeout']
-      end
-    end # class KiwiConfig
+    attr_reader :port, :nodes, :heartbeat_timeout, :replicas, :read_quorum
+    attr_accessor :ip
+
+    def init(args)
+      config_file = args[0]
+      config = YAML.load_file(File.join(__dir__, '../../' + config_file))
+      @port = config['port']
+      @nodes = config['nodes']
+      @heartbeat_timeout = config['heartbeat_timeout']
+      @replicas = config['replicas']
+      @read_quorum = config['read_quorum']
+    end
   end # module Config
 end # module Kiwi

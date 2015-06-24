@@ -2,3 +2,4 @@ port: 1771
 nodes:
   - 127.0.0.1:1771
 heartbeat_timeout: 30
+replicas: 2
